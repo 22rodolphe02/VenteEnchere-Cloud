@@ -36,25 +36,19 @@ public class PostgresConfig {
 
     @Primary
     @Bean("postgresDatasource")
-//    @ConfigurationProperties(prefix="spring.datasource")
     public DataSource dataSource() {
-//        return DataSourceBuilder.create().build();
         DataSourceBuilder<?> dataSource = DataSourceBuilder.create();
-
-        System.out.println(env.getProperty("org.postgresql.Driver"));
         dataSource.driverClassName("org.postgresql.Driver");
+        dataSource.url("jdbc:postgresql://containers-us-west-102.railway.app:6347/railway");
         dataSource.username("postgres");
+        dataSource.password("muWcYv3UjOvmQyqrcSWu");
         return dataSource.build();
     }
 
     @Primary
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder, @Qualifier("postgresDatasource") DataSource dataSource) {
-//        return builder
-//                .dataSource(dataSource)
-//                .packages("com.enchere.postgres.models")
-//                .persistenceUnit("db1")
-//                .build();
+
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
