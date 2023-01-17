@@ -42,9 +42,10 @@ public class PostgresConfig {
         DataSourceBuilder<?> dataSource = DataSourceBuilder.create();
         System.out.println(env.getProperty("org.postgresql.Driver"));
         dataSource.driverClassName("org.postgresql.Driver");
-        dataSource.url("jdbc:postgresql://containers-us-west-102.railway.app:6347/railway");
+        dataSource.url("jdbc:postgresql://localhost:5432/enchere");
+//        dataSource.url("jdbc:postgresql://containers-us-west-102.railway.app:6347/railway");
         dataSource.username("postgres");
-        dataSource.password("muWcYv3UjOvmQyqrcSWu");
+        dataSource.password("eric1545");
         return dataSource.build();
     }
 
