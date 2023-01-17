@@ -1,0 +1,94 @@
+I - BackOffice:
+    1 - Login admin:
+        ☐ front (page login)
+        ☐ metier
+            ☐ Admin.java (models)
+            ☐ AdminController (fonction: login)
+        ☐ base
+            - admin(id, email, mdp, solde)
+
+    2 - gestion des element necessaire:
+        ☐ Categorie
+            ☐ Crud categorie
+                ☐ front (page categorie: (liste et formulaire d'insertion))
+                ☐ metier 
+                    ☐ Categorie.java (models)
+                    ☐ CategorieController 
+                        ☐ fonction
+                            ☐ liste
+                            ☐ inserer
+                            ☐ update
+                            ☐ delete
+                ☐ base
+                    - categorie(id, nom)
+        ☐ Duree enchere (terminer l'enchere si la duree est terminer) [argumement: dateDebut, duree]
+            ☐ fonction pour verifier si l'enchere est terminer
+                - Date debut + duree = dateFin
+                - si dateFin >= now() -> terminer
+                OU
+            ☐ fonction pour voir la duree restant 
+                - dateFin - now() [en heure]
+
+    3 - tableau statistique:
+        - ProduitPlusEnVente
+        - ProduitVenduCher
+        - ClientPlusDeProduitVendu
+
+
+    4 - Validation rechargement compte:
+        ☐ front (page listeClientRechargeCompte: (avec lien valider a chaque client))
+        ☐ metier 
+            ☐ Solde.java (models)
+            ☐ SoldeController 
+                 ☐ fonction 
+                    ☐ liste (lister le solde avec idMouvementSolde=1 et valider=false)
+                    ☐ inserer(inserer un mouvement par client)
+        ☐ base
+            - client(id, nom, prenom, email, mdp)
+            - mouvementSolde(id, nom) [depot ou retrait]
+            - solde(idClient, idMouvementSolde, montant, valider) 
+                - [colonne valider: applicable uniquement dans le depot car l'admin doit le valider]
+
+
+II - FrontOffice Web:
+     ☐ Voir liste/fiche des enchères (sans login)
+        ☐ Liste
+            ☐ front (page listeEnchere)
+            ☐ metier 
+                ☐ Enchere.java (models)
+                ☐ EnchereController 
+                    ☐ fonction
+                        ☐ liste (liste des encheres avec fini=false)
+            ☐ base
+                - enchere(id, produit, description, prixMin, duree, idCategorie, idClient, fini)
+        ☐ fiche
+            ☐ front (page ficheEnchere)
+            ☐ metier 
+                ☐ EnchereController 
+                    ☐ fonction
+                        ☐ encherir (fiche de l'enchere avec id=idEnchereSelectionner)
+    ☐ Renchérir (avec login)
+    
+        ☐ front (page encherir)
+        ☐ metier 
+            ☐ EnchereController 
+                - utiliser le foction fiche 
+        ☐ Boutton avec Encherir(si il n'a pas enchere miser: (select enchere where idCLient=sonId).size != 0) ou Reencherir(sinon)
+            - ajouter attribut dejaEncherir dans la classe model Enchere default false (setna true rah size != 0)
+        ☐ En cliquant le boutton: login s'il n'est pas connecter sinon page encherir
+    ☐  Faire une recherche avancé (Par mot clé, date, catégorie, prix, statut)
+        ☐ front (page: recherhe[pour le input] et resultatRecherche)
+        ☐ Metier
+            ☐ fonction (Dans le classe model enchere)
+                ☐ genererSqlRecherche() (a partir des inputs) table enchere
+    ☐ Voir l’historique de ses propres enchères
+        ☐ front (page: listeEnchereParClient) 
+            ☐ liste des produits qu'il a mis en vente (avec boutton details)
+            ☐ liste de offre de chaque produit selectionner(order by date)
+        ☐ Metier
+            ☐ fonction
+                ☐ getEnchereParClient() [models.Enchere]
+                ☐ getOffreParEnchere() [models.Enchere]
+        ☐ base
+            - offre(id, idEnchere, idClient, date, montant)
+
