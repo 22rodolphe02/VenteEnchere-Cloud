@@ -1,8 +1,8 @@
 package com.enchere.postgres.models;
 
-import org.gen.dao.annotations.Colonne;
-import org.gen.dao.annotations.Table;
-import org.gen.dao.utils.GeneriqueDAO;
+import com.enchere.org.gen.dao.annotations.Colonne;
+import com.enchere.org.gen.dao.annotations.Table;
+import com.enchere.org.gen.dao.utils.GeneriqueDAO;
 
 @Table
 public class Admin extends GeneriqueDAO {
