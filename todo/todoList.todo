@@ -5,7 +5,7 @@ I - BackOffice:
             ☐ Admin.java (models)
             ☐ AdminController (fonction: login)
         ☐ base
-            - admin(id, email, mdp, solde)
+            - admin(id, email, motDePasse, solde)
 
     2 - gestion des element necessaire:
         ☐ Categorie
@@ -44,7 +44,7 @@ I - BackOffice:
                     ☐ liste (lister le solde avec idMouvementSolde=1 et valider=false)
                     ☐ inserer(inserer un mouvement par client)
         ☐ base
-            - client(id, nom, prenom, email, mdp)
+            - client(id, nom, prenom, email, motDePasse)
             - mouvementSolde(id, nom) [depot ou retrait]
             - solde(idClient, idMouvementSolde, montant, valider) 
                 - [colonne valider: applicable uniquement dans le depot car l'admin doit le valider]
