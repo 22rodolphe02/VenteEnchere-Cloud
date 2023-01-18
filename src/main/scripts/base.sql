@@ -9,19 +9,19 @@ create database enchere;
 create table admin (
     id serial primary key ,
     email varchar(50) not null unique ,
-    mdp varchar(100) not null ,
+    motDePasse varchar(100) not null ,
     solde double precision default 0
 );
-insert into admin (email, mdp) values ('admin@gmail.com', 'admin');
+insert into admin (email, motDePasse) values ('admin@gmail.com', 'admin');
 
 create table client (
     id serial primary key ,
     nom varchar(50),
     prenom varchar(50),
     email varchar(50),
-    mdp varchar(100)
+    motDePasse varchar(100)
 );
-insert into client (nom, prenom, email, mdp) values
+insert into client (nom, prenom, email, motDePasse) values
                                                  ('Eric', 'Georges', 'eric@gmail.com', 'eric'),
                                                  ('Rodolphe', 'Tsiafara', 'rodolphe@gmail.com', 'rodolphe'),
                                                  ('Hary', 'Lovanomena', 'hary@gmail.com', 'hary'),
@@ -36,11 +36,14 @@ insert into mouvementSolde (nom) values
                                      ('retrait');
 
 create table solde (
+    id serial primary key ,
     idClient int not null ,
     idMouvementSolde int not null ,
     montant double precision default 0,
     valider boolean default false
 );
+alter table solde add foreign key (idClient) references client(id);
+alter table solde add foreign key (idMouvementSolde) references mouvementSolde(id);
 insert into solde (idClient, idMouvementSolde, montant) values
                                                             (1, 1, 100000),
                                                             (3, 1, 300000),
