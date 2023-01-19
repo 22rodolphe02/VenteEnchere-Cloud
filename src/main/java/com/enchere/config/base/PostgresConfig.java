@@ -45,7 +45,7 @@ public class PostgresConfig {
 
         dataSource.url("jdbc:postgresql://localhost:5432/enchere");
         dataSource.username("postgres");
-        dataSource.password("rodolphe");
+        dataSource.password("eric1545");
         return dataSource.build();
     }
 
