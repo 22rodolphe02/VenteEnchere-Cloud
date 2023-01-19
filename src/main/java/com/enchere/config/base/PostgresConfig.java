@@ -38,14 +38,14 @@ public class PostgresConfig {
     @Bean("postgresDatasource")
     public DataSource dataSource() {
         DataSourceBuilder<?> dataSource = DataSourceBuilder.create();
+<<<<<<< Updated upstream
+=======
+        System.out.println(env.getProperty("org.postgresql.Driver"));
+>>>>>>> Stashed changes
         dataSource.driverClassName("org.postgresql.Driver");
-//        dataSource.url("jdbc:postgresql://containers-us-west-102.railway.app:6347/railway");
-//        dataSource.username("postgres");
-//        dataSource.password("muWcYv3UjOvmQyqrcSWu");
-
-        dataSource.url("jdbc:postgresql://localhost:5432/enchere");
+        dataSource.url("jdbc:postgresql://containers-us-west-102.railway.app:6347/railway");
         dataSource.username("postgres");
-        dataSource.password("eric1545");
+        dataSource.password("muWcYv3UjOvmQyqrcSWu");
         return dataSource.build();
     }
 
