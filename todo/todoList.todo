@@ -11,22 +11,22 @@ I - BackOffice:
         ☐ Categorie
             ☐ Crud categorie
                 ☐ front (page categorie: (liste et formulaire d'insertion))
-                ☐ metier 
-                    ☐ Categorie.java (models)
-                    ☐ CategorieController 
-                        ☐ fonction
-                            ☐ liste
-                            ☐ inserer
-                            ☐ update
-                            ☐ delete
-                ☐ base
+                ✔ metier @done(23-01-18 09:54)
+                    ✔ Categorie.java (models) @done(23-01-18 09:54)
+                    ✔ CategorieController (miantso anity raha hanao crud page) @done(23-01-18 09:54)
+                        ✔ fonction @done(23-01-18 09:54)
+                            ✔ liste @done(23-01-18 09:54)
+                            ✔ inserer @done(23-01-18 09:54)
+                            ✔ update @done(23-01-18 09:54)
+                            ✔ delete @done(23-01-18 09:54)
+                ✔ base @done(23-01-18 09:54)
                     - categorie(id, nom)
-        ☐ Duree enchere (terminer l'enchere si la duree est terminer) [argumement: dateDebut, duree]
-            ☐ fonction pour verifier si l'enchere est terminer
+        ✔ Duree enchere (terminer l'enchere si la duree est terminer) [argumement: dateDebut, duree] @done(23-01-18 09:54)
+            ✔ fonction pour verifier si l'enchere est terminer (Enchere: terminerEnchere(), terminerEnchereById(idEnchere)) @done(23-01-18 09:54)
                 - Date debut + duree = dateFin
                 - si dateFin >= now() -> terminer
                 OU
-            ☐ fonction pour voir la duree restant 
+            ✔ fonction pour voir la duree restant (Enchere: getDureeRestantById(idenchere), getDureeRestant()) @done(23-01-18 09:54)
                 - dateFin - now() [en heure]
 
     3 - tableau statistique:
@@ -54,28 +54,27 @@ II - FrontOffice Web:
      ☐ Voir liste/fiche des enchères (sans login)
         ☐ Liste
             ☐ front (page listeEnchere)
-            ☐ metier 
-                ☐ Enchere.java (models)
-                ☐ EnchereController 
-                    ☐ fonction
-                        ☐ liste (liste des encheres avec fini=false)
-            ☐ base
-                - enchere(id, produit, description, prixMin, duree, idCategorie, idClient, fini)
+            ✔ metier @done(23-01-18 10:01)
+                ✔ Enchere.java (models) [enchereEnCours(), enchereEnAttente()] @done(23-01-18 09:54)
+                ✔ EnchereController @done(23-01-18 09:54)
+                    ✔ fonction @done(23-01-18 09:54)
+                        ✔ liste (liste des encheres avec fini=false) @done(23-01-18 10:00)
+            ✔ base @done(23-01-18 09:54)
+                ✔ enchere(id, produit, description, prixMin, duree, idCategorie, idClient, fini, dateDebut) @done(23-01-18 10:00)
         ☐ fiche
             ☐ front (page ficheEnchere)
-            ☐ metier 
-                ☐ EnchereController 
-                    ☐ fonction
-                        ☐ encherir (fiche de l'enchere avec id=idEnchereSelectionner)
+            ✔ metier @done(23-01-18 10:01)
+                ✔ EnchereController @done(23-01-18 10:02)
+                    ✔ fonction @done(23-01-18 10:02)
+                        ✔ fiche(idEnchere) (fiche de l'enchere avec id=idEnchereSelectionner) @done(23-01-18 10:02)
     ☐ Renchérir (avec login)
-    
         ☐ front (page encherir)
-        ☐ metier 
-            ☐ EnchereController 
-                - utiliser le foction fiche 
-        ☐ Boutton avec Encherir(si il n'a pas enchere miser: (select enchere where idCLient=sonId).size != 0) ou Reencherir(sinon)
-            - ajouter attribut dejaEncherir dans la classe model Enchere default false (setna true rah size != 0)
-        ☐ En cliquant le boutton: login s'il n'est pas connecter sinon page encherir
+        ✔ metier @done(23-01-18 10:22)
+            ✔ EnchereController @done(23-01-18 10:22) ()
+                ✔ utiliser le foction fiche @done(23-01-18 10:23)
+            ✔ Boutton avec Encherir(si il n'a pas enchere miser: (select enchere where idCLient=sonId).size != 0) ou Reencherir(sinon) @done(23-01-18 10:22) (verifiena am attribut dejaEncherir am Enchere)
+                ✔ ajouter attribut dejaEncherir dans la classe model Enchere default false (setna true rah size != 0) @done(23-01-18 10:22)
+            ☐ En cliquant le boutton: login s'il n'est pas connecter sinon page encherir
     ☐  Faire une recherche avancé (Par mot clé, date, catégorie, prix, statut)
         ☐ front (page: recherhe[pour le input] et resultatRecherche)
         ☐ Metier

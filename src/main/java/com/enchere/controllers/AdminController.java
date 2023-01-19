@@ -19,7 +19,6 @@ public class AdminController {
     @GetMapping
     public List<Admin> findAll() throws Exception {
         try {
-            System.out.println("ok");
             return (List<Admin>) new Admin().list(Database.getConnection());
         }
         catch (Exception e) {

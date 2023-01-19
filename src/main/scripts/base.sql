@@ -64,6 +64,7 @@ create table enchere (
     produit varchar(100) not null ,
     description text not null ,
     prixMin double precision not null ,
+    dateDebut timestamp not null default now(),
     duree time not null ,
     idCategorie int not null ,
     idClient int not null ,
@@ -71,10 +72,12 @@ create table enchere (
 );
 alter table enchere add foreign key (idCategorie) references categorie(id);
 alter table enchere add foreign key (idClient) references client(id);
-insert into enchere (produit, description, prixMin, duree, idCategorie, idClient) values
-    ('Ballon football', 'Coupe du monde 2014', 1000, '02:30:30', 5, 1);
+insert into enchere (produit, description, prixMin, dateDebut, duree, idCategorie, idClient) values
+    ('Maillot', 'lionnel messi', 2000, '2023-01-18 06:00:00', '02:30:00', 5, 1),
+    ('Ballon football', 'Coupe du monde 2014', 1000, '2023-01-18 07:00:00', '02:30:30', 5, 1);
 
 
+-- select ((dateDebut+duree) - now()) as dureeRestant from enchere;
 
 
 create table offre (
@@ -97,4 +100,14 @@ create table vendu (
 );
 alter table vendu add foreign key (idOffre) references offre(id);
 alter table vendu add foreign key (idEnchere) references enchere(id);
+
+
+
+
+
+select ((dateDebut+duree) - now()) as dureeRestant from enchere order by id asc;
+
+
+
+-- SELECT CASE when dateFin > CURRENT_TIMESTAMP THEN 'En cours' when dateFin<CURRENT_TIMESTAMP THEN 'Expire' END as delaiVente FROM Vente WHERE id = '" + this.id + "'"
 
