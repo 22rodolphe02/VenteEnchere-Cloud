@@ -1,6 +1,8 @@
 package com.enchere.utils;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -8,32 +10,15 @@ import java.time.Period;
 
 public class Utils {
 
-    public static void main(String[] args) {
-        String texte = "Bonjour tout le monde! Je viens de paris, je 13 ans";
-        System.out.println(nbMotText(texte));
-        System.out.println(compterMot(texte, "je"));
+
+    public static Time toTime(String valeur) {
+        return Time.valueOf(valeur.split("\\.")[0]);
     }
 
-    public static int nbMotText(String texte) {
-        return texte.split(" ").length;
-    }
-
-    public static int compterMot(String texte, String motACompter) {
-        String[] tabMot = texte.split(" ");
-        int nbMotACompter = 0;
-        for (String mot: tabMot) {
-            if (mot.equalsIgnoreCase(motACompter)) {
-                nbMotACompter++;
-            }
-        }
-        return nbMotACompter;
-    }
-
-    public static int getAge(Date sqlDate) {
-        LocalDate dateNaissance = sqlDate.toLocalDate();
-        LocalDate aujourdhui = LocalDate.now();
-        Period age = Period.between(dateNaissance, aujourdhui);
-        return age.getYears();
+    public static Timestamp toTimestamp(String valeur) {
+        System.out.println("aaaaaaaaaaaaaaaaaaa = " + castTimeStamp(valeur));
+//        return Timestamp.valueOf(castTimeStamp(valeur));
+        return Timestamp.valueOf(valeur);
     }
 
     public static String castTimeStamp(String s) {
