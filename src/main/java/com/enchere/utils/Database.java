@@ -28,6 +28,7 @@ public class Database {
         try
         {
             Class.forName("org.postgresql.Driver");
+            System.out.println();
             url = String.format(url, host, port, database);
             connection = DriverManager.getConnection(url, user, pass);
         }
