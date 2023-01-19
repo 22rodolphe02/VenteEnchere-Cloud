@@ -22,13 +22,13 @@ public class SoldeController {
         this.mouvementRepos = mouvementRepos;
     }
 
-    @GetMapping("/non-valid")
-    public ResponseData<List<Solde>> listSoldeNonValider(){
-        List<Solde> soldes = soldeRepos.findAllByValider(false);
+    @GetMapping("/depot-non-valid")
+    public ResponseData<List<Solde>> listDepotNonValider(){
+        List<Solde> soldes = soldeRepos.findByValiderAndMouvementSolde_Id(false, 1);
         if (soldes == null){
             return new ResponseData<>(false, null);
         }
-        return new ResponseData<>(false, soldes);
+        return new ResponseData<>(true, soldes);
     }
 
     @PostMapping("/")
@@ -41,8 +41,5 @@ public class SoldeController {
     public int update(@RequestBody Solde solde){
         return soldeRepos.updateValiderById(solde.getValider(), solde.getId());
     }
-
-//    @PostMapping("/edit")
-//    public int edit(@RequestBody Solde solde)
 
 }
