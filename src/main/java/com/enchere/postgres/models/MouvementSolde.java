@@ -1,5 +1,6 @@
 package com.enchere.postgres.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -18,7 +19,7 @@ public class MouvementSolde {
     private String nom;
 
     @OneToMany(mappedBy = "mouvementSolde")
-    @JsonIgnoreProperties("mouvementSolde")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "mouvementSolde"})
     private Set<Solde> soldes = new LinkedHashSet<>();
 
     public Integer getId() {
