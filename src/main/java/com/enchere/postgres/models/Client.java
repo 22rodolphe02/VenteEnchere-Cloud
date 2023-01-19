@@ -1,5 +1,6 @@
 package com.enchere.postgres.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -27,7 +28,7 @@ public class Client {
     private String motDePasse;
 
     @OneToMany(mappedBy = "client")
-    @JsonIgnoreProperties("client")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "client"})
     private Set<Solde> soldes = new LinkedHashSet<>();
 
     public Integer getId() {

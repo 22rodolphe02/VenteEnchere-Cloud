@@ -1,5 +1,6 @@
 package com.enchere.postgres.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -13,12 +14,13 @@ public class Solde {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idclient", nullable = false)
-    @JsonIgnoreProperties("soldes")
+//    @JsonIgnoreProperties("soldes")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "soldes"})
     private Client client;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idmouvementsolde", nullable = false)
-    @JsonIgnoreProperties("soldes")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "soldes"})
     private MouvementSolde mouvementSolde;
 
     @Column(name = "montant")
