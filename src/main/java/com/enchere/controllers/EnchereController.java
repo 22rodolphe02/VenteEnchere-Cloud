@@ -42,7 +42,7 @@ public class EnchereController {
     }
 
     //    build create enchere REST API
-    @GetMapping("/rechercheAvancer")
+    @PostMapping("/rechercheAvancer")
     public List<Enchere> rechercheAvancer(@RequestBody RechercheAvance rechercheAvance) throws Exception {
         try {
             return rechercheAvance.rechercheAvancer();
