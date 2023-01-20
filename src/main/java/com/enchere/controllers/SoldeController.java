@@ -38,7 +38,7 @@ public class SoldeController {
         return new ResponseEntity<>(1, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/")
+    @PostMapping("/update")
     public int update(@RequestBody Solde solde){
         return soldeRepos.updateValiderById(solde.getValider(), solde.getId());
     }
