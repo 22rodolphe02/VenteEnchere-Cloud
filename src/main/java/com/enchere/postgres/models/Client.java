@@ -8,34 +8,22 @@ import com.enchere.utils.Database;
 import java.util.List;
 
 @Table
-public class Admin extends GeneriqueDAO {
+public class Client extends GeneriqueDAO {
     @Colonne
     private Integer id;
     @Colonne
     private String email;
     @Colonne
     private String mdp;
-    @Colonne
-    private Double solde;
 
-
-    public Admin() {
+    public Client() {
     }
 
-    public Admin(Integer id) {
+    public Client(Integer id, String email, String mdp) {
         this.id = id;
-    }
-
-    public Admin(String email, String mdp) {
         this.email = email;
         this.mdp = mdp;
     }
-
-    public Admin(Double solde) {
-        this.solde = solde;
-    }
-
-
 
     public Integer getId() {
         return id;
@@ -61,16 +49,10 @@ public class Admin extends GeneriqueDAO {
         this.mdp = mdp;
     }
 
-    public Double getSolde() {
-        return solde;
-    }
 
-    public void setSolde(Double solde) {
-        this.solde = solde;
-    }
-    public int getIdAdmin() throws Exception{
-        List<Admin> admins = (List<Admin>) this.list(Database.getConnection());
-        int id = admins.get(0).getId();
+    public int getIdClient() throws Exception{
+        List<Client> client = (List<Client>) this.list(Database.getConnection());
+        int id =client.get(0).getId();
         return id;
     }
 }
