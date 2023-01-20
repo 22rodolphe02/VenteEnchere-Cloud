@@ -36,10 +36,10 @@ public class AdminController {
 
     //    build create admin REST API
     @PostMapping
-    public boolean login(@RequestBody Admin admin) throws Exception {
+    public String login(@RequestBody Admin admin) throws Exception {
         try {
             Connection con = Database.getConnection();
-            int iduser = admin.getId();
+            int iduser = admin.getIdAdmin();
             if (iduser != 0){
                 String token = Utils.creationToken(admin.getEmail(), admin.getMdp());
                 System.out.println("Le token = "+token);
@@ -62,9 +62,9 @@ public class AdminController {
                 else {
                     System.out.println("Token existant ! Oueh !");
                 }
-                return true;
+                return token;
             }
-            else return false;
+            else return "";
 
         }
         catch (Exception e) {
