@@ -21,7 +21,7 @@ public class ClientController {
     public String login(@RequestBody ClientDao client) throws Exception {
         try {
             Connection con = Database.getConnection();
-            Integer iduser = client.getId();
+            Integer iduser = client.getIdClient();
             if (iduser != null){
                 String token = Utils.creationToken(client.getEmail(), client.getMdp());
                 System.out.println("Le token = "+token);
@@ -54,7 +54,7 @@ public class ClientController {
             throw e;
         }
     }
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<ClientDao> saveClient(@RequestBody ClientDao client) throws Exception {
         try {
             client.save(Database.getConnection());

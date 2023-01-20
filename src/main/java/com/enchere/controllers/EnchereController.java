@@ -18,16 +18,16 @@ import java.util.List;
 public class EnchereController {
 
     //    build create enchere REST API
-    @GetMapping("/recordAcheteur")
+   /* @GetMapping("/recordAcheteur")
     public ClientDao recordAcheteur() throws Exception {
         try {
-            return Enchere.recordAcheteur();
+            return  Enchere.recordAcheteur();
         }
         catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
-    }
+    }*/
 
     //    build create enchere REST API
     @GetMapping("/record")
