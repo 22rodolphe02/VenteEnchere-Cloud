@@ -17,7 +17,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/enchere/admin")
+@RequestMapping("api/projetEnchere/admin")
 public class AdminController {
 
 

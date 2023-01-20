@@ -1,37 +1,53 @@
 package com.enchere.postgres.models;
 
-import com.enchere.org.gen.dao.annotations.Colonne;
-import com.enchere.org.gen.dao.annotations.Table;
-import com.enchere.org.gen.dao.utils.GeneriqueDAO;
-import com.enchere.utils.Database;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
-@Table
-public class Client extends GeneriqueDAO {
-    @Colonne
+@Entity
+@Table(name = "client")
+public class Client {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
-    @Colonne
+
+    @Column(name = "nom", length = 50)
+    private String nom;
+
+    @Column(name = "prenom", length = 50)
+    private String prenom;
+
+    @Column(name = "email", length = 50)
     private String email;
-    @Colonne
-    private String mdp;
 
-    public Client() {
+    @Column(name = "mdp", length = 100)
+    private String motDePasse;
+
+    @OneToMany(mappedBy = "client")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "client"})
+    private Set<Solde> soldes = new LinkedHashSet<>();
+
+
+    public String getNom() {
+        return nom;
     }
 
-    public Client(Integer id, String email, String mdp) {
-        this.id = id;
-        this.email = email;
-        this.mdp = mdp;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public Integer getId() {
-        return id;
+    public String getPrenom() {
+        return prenom;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
+
 
     public String getEmail() {
         return email;
@@ -41,18 +57,20 @@ public class Client extends GeneriqueDAO {
         this.email = email;
     }
 
-    public String getMdp() {
-        return mdp;
+    public String getMotDePasse() {
+        return motDePasse;
     }
 
-    public void setMdp(String mdp) {
-        this.mdp = mdp;
+    public void setMotDePasse(String motDePasse) {
+        this.motDePasse = motDePasse;
     }
 
-
-    public int getIdClient() throws Exception{
-        List<Client> client = (List<Client>) this.list(Database.getConnection());
-        int id =client.get(0).getId();
-        return id;
+    public Set<Solde> getSoldes() {
+        return soldes;
     }
+
+    public void setSoldes(Set<Solde> soldes) {
+        this.soldes = soldes;
+    }
+
 }

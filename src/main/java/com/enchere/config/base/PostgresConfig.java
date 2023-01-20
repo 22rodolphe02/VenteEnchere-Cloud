@@ -38,6 +38,10 @@ public class PostgresConfig {
     @Bean("postgresDatasource")
     public DataSource dataSource() {
         DataSourceBuilder<?> dataSource = DataSourceBuilder.create();
+<<<<<<< Updated upstream
+=======
+        System.out.println(env.getProperty("org.postgresql.Driver"));
+>>>>>>> Stashed changes
         dataSource.driverClassName("org.postgresql.Driver");
         dataSource.url("jdbc:postgresql://containers-us-west-102.railway.app:6347/railway");
         dataSource.username("postgres");
