@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/soldes")
+@CrossOrigin("*")
 public class SoldeController {
     private final SoldeRepository soldeRepos;
     private final MouvementsoldeRepository mouvementRepos;
