@@ -66,9 +66,11 @@ public class ClientDao extends GeneriqueDAO {
     public void setMdp(String mdp) {
         this.mdp = mdp;
     }
-    public int getIdClient() throws Exception{
+    public Integer getIdClient() throws Exception{
         List<Client> client = (List<Client>) this.list(Database.getConnection());
-        int id =client.get(0).getId();
+        Integer id;
+        if (client.size()!=0) id = client.get(0).getId();
+        else id = null;
         return id;
     }
 }
