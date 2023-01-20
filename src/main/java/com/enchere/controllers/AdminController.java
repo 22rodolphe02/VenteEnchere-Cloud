@@ -1,12 +1,18 @@
 package com.enchere.controllers;
 
+import com.enchere.helper.SequenceHelper;
 import com.enchere.postgres.models.Admin;
+import com.enchere.postgres.models.Token;
+import com.enchere.postgres.models.Token_user;
 import com.enchere.utils.Database;
+import com.enchere.utils.Utils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -32,7 +38,34 @@ public class AdminController {
     @PostMapping
     public boolean login(@RequestBody Admin admin) throws Exception {
         try {
-            return admin.list(Database.getConnection()).size() != 0;
+            Connection con = Database.getConnection();
+            int iduser = admin.getId();
+            if (iduser != 0){
+                String token = Utils.creationToken(admin.getEmail(), admin.getMdp());
+                System.out.println("Le token = "+token);
+                boolean exist = Token.verifierExistanceTokenAndValidation(admin.getEmail(), admin.getMdp());
+                if (exist == false){
+                    System.out.println("Token non existant ou non valide !");
+                    Timestamp dateexp = Utils.getDateExpiration(30);
+                    Token tok = new Token();
+                    tok.setToken(token);
+                    tok.setDateexpiration(dateexp);
+                    tok.insererToken(con);
+                    int idtoken = Integer.parseInt(SequenceHelper.last_value("token", con));
+                    System.out.println("idtoken crée ="+idtoken);
+                    Token_user tu = new Token_user();
+                    tu.setId_token(idtoken);
+                    tu.setId_admin(iduser);
+                    tu.insererTokenUser(con);
+                    con.close();
+                }
+                else {
+                    System.out.println("Token existant ! Oueh !");
+                }
+                return true;
+            }
+            else return false;
+
         }
         catch (Exception e) {
             e.printStackTrace();

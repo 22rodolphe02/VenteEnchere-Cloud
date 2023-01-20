@@ -3,6 +3,9 @@ package com.enchere.postgres.models;
 import com.enchere.org.gen.dao.annotations.Colonne;
 import com.enchere.org.gen.dao.annotations.Table;
 import com.enchere.org.gen.dao.utils.GeneriqueDAO;
+import com.enchere.utils.Database;
+
+import java.util.List;
 
 @Table(name = "client")
 public class ClientDao extends GeneriqueDAO {
@@ -62,5 +65,10 @@ public class ClientDao extends GeneriqueDAO {
 
     public void setMdp(String mdp) {
         this.mdp = mdp;
+    }
+    public int getIdClient() throws Exception{
+        List<Client> client = (List<Client>) this.list(Database.getConnection());
+        int id =client.get(0).getId();
+        return id;
     }
 }
