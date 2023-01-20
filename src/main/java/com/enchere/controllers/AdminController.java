@@ -39,8 +39,8 @@ public class AdminController {
     public String login(@RequestBody Admin admin) throws Exception {
         try {
             Connection con = Database.getConnection();
-            int iduser = admin.getIdAdmin();
-            if (iduser != 0){
+            Integer iduser = admin.getIdAdmin();
+            if (iduser != null){
                 String token = Utils.creationToken(admin.getEmail(), admin.getMdp());
                 System.out.println("Le token = "+token);
                 boolean exist = Token.verifierExistanceTokenAndValidation(admin.getEmail(), admin.getMdp());
