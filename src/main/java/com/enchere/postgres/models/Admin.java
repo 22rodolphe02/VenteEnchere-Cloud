@@ -4,6 +4,7 @@ import com.enchere.org.gen.dao.annotations.Colonne;
 import com.enchere.org.gen.dao.annotations.Table;
 import com.enchere.org.gen.dao.utils.GeneriqueDAO;
 import com.enchere.utils.Database;
+import java.util.List;
 
 @Table
 public class Admin extends GeneriqueDAO {
