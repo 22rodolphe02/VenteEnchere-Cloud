@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 @RestController
 @RequestMapping("api/projetEnchere/client")
 public class ClientController {
-    @PostMapping
+    @PostMapping("/login")
     public boolean login(@RequestBody ClientDao client) throws Exception {
         try {
             Connection con = Database.getConnection();
