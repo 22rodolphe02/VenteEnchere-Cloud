@@ -18,11 +18,11 @@ import java.sql.Timestamp;
 @RequestMapping("api/projetEnchere/client")
 public class ClientController {
     @PostMapping("/login")
-    public boolean login(@RequestBody ClientDao client) throws Exception {
+    public String login(@RequestBody ClientDao client) throws Exception {
         try {
             Connection con = Database.getConnection();
-            int iduser = client.getId();
-            if (iduser != 0){
+            Integer iduser = client.getId();
+            if (iduser != null){
                 String token = Utils.creationToken(client.getEmail(), client.getMdp());
                 System.out.println("Le token = "+token);
                 boolean exist = Token.verifierExistanceTokenAndValidation(client.getEmail(), client.getMdp());
@@ -44,9 +44,9 @@ public class ClientController {
                 else {
                     System.out.println("Token existant ! Oueh !");
                 }
-                return true;
+                return token;
             }
-            else return false;
+            else return "";
 
         }
         catch (Exception e) {
