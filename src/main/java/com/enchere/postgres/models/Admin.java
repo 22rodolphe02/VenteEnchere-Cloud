@@ -3,6 +3,7 @@ package com.enchere.postgres.models;
 import com.enchere.org.gen.dao.annotations.Colonne;
 import com.enchere.org.gen.dao.annotations.Table;
 import com.enchere.org.gen.dao.utils.GeneriqueDAO;
+import com.enchere.utils.Database;
 
 @Table
 public class Admin extends GeneriqueDAO {
