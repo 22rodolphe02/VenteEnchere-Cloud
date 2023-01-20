@@ -42,7 +42,7 @@ public abstract class GeneriqueDAO {
                 liste.add(instance);
             }
             statement.close();
-            con.close();
+
             return liste;
         }
         catch (Exception e) {
@@ -52,7 +52,7 @@ public abstract class GeneriqueDAO {
         finally {
             assert statement != null;
             statement.close();
-            con.close();
+
         }
     }
 
@@ -79,7 +79,7 @@ public abstract class GeneriqueDAO {
         finally {
             assert statement != null;
             statement.close();
-            con.close();
+
         }
     }
 
@@ -102,9 +102,7 @@ public abstract class GeneriqueDAO {
             e.printStackTrace();
             throw e;
         }
-        finally {
-            con.close();
-        }
+
     }
 
     public void save(Connection con) throws Exception {
@@ -135,7 +133,6 @@ public abstract class GeneriqueDAO {
         finally {
             assert statement != null;
             statement.close();
-            con.close();
         }
     }
 
@@ -157,7 +154,6 @@ public abstract class GeneriqueDAO {
         finally {
             assert statement != null;
             statement.close();
-            con.close();
         }
     }
 
