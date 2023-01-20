@@ -68,9 +68,11 @@ public class Admin extends GeneriqueDAO {
         this.solde = solde;
     }
     
-    public int getIdAdmin() throws Exception{
-        List<Admin> admin = (List<Admin>) this.list(Database.getConnection());
-        int id =admin.get(0).getId();
+    public Integer getIdAdmin() throws Exception{
+        List<Admin> admins = (List<Admin>) this.list(Database.getConnection());
+        Integer id;
+        if (admins.size()!=0) id = admins.get(0).getId();
+        else id = null;
         return id;
     }
 }
