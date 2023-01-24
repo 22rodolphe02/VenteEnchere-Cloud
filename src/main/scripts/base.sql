@@ -136,5 +136,23 @@ create table teste (
     nom varchar(10) not null
 );
 
+
+CREATE TABLE token(
+                      id SERIAL PRIMARY KEY ,
+                      token VARCHAR(256) NOT NULL,
+                      datecreation TIMESTAMP NOT NULL DEFAULT NOW(),
+                      dateexpiration TIMESTAMP NOT NULL
+);
+
+CREATE TABLE token_user(
+                           id SERIAL PRIMARY KEY,
+                           id_token INT NOT NULL ,
+                           id_admin INT,
+                           id_user INT,
+                           FOREIGN KEY (id_token) REFERENCES token(id),
+                           FOREIGN KEY (id_admin) REFERENCES admin(id),
+                           FOREIGN KEY (id_user) REFERENCES client(id)
+);
+
 -- SELECT CASE when dateFin > CURRENT_TIMESTAMP THEN 'En cours' when dateFin<CURRENT_TIMESTAMP THEN 'Expire' END as delaiVente FROM Vente WHERE id = '" + this.id + "'"
 
