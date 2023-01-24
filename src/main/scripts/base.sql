@@ -1,10 +1,10 @@
-\c postgres;
-
-drop database enchere;
-
-create database enchere;
-
-\c enchere;
+-- \c postgres;
+--
+-- drop database enchere;
+--
+-- create database enchere;
+--
+-- \c enchere;
 
 create table admin (
                        id serial primary key ,
@@ -42,9 +42,12 @@ create table solde (
                        valider boolean default false
 );
 insert into solde (idClient, idMouvementSolde, montant) values
-                                                            (1, 1, 100000),
-                                                            (3, 1, 300000),
-                                                            (4, 1, 400000);
+                                                            (1, 1, 500000),
+                                                            (3, 1, 500000),
+                                                            (4, 1, 700000),
+                                                            (2, 1, 600000),
+                                                            (3, 1, 5500000),
+                                                            (4, 1, 7070000);
 
 
 create table categorie (
@@ -72,9 +75,17 @@ create table enchere (
 );
 alter table enchere add foreign key (idCategorie) references categorie(id);
 alter table enchere add foreign key (idClient) references client(id);
+
+
+/*delete from vendu;
+delete from offre;
+delete from enchere;
+delete from categorie;*/
 insert into enchere (produit, description, prixMin, dateDebut, duree, idCategorie, idClient) values
-                                                                                                 ('Maillot', 'lionnel messi', 2000, '2023-01-18 06:00:00', '02:30:00', 5, 1),
-                                                                                                 ('Ballon football', 'Coupe du monde 2014', 1000, '2023-01-18 07:00:00', '02:30:30', 5, 1);
+                                                                                                 ('Maillot', 'lionnel messi', 2000, '2023-01-20 06:00:00', '05:00:00', 14, 1),
+                                                                                                 ('Ballon football', 'Coupe du monde 2014', 1000, '2023-01-21 07:00:00', '06:30:30', 14, 2),
+                                                                                                 ('Guitare', 'guitare base', 500, '2023-01-22 14:00:00', '05:00:00', 10, 1),
+                                                                                                 ('Peinture', 'Couleur varie', 1500, '2023-01-20 07:00:00', '06:30:30', 11, 3);
 
 
 -- select ((dateDebut+duree) - now()) as dureeRestant from enchere;
@@ -90,20 +101,26 @@ create table offre (
 alter table offre add foreign key (idClient) references client(id);
 alter table offre add foreign key (idEnchere) references enchere(id);
 insert into offre (idEnchere, idClient, date, montant) values
-                                                           (1, 2, '2023-01-01 09:00:00', 1000),
-                                                           (1, 3, '2023-01-01 09:05:00', 2000),
-                                                           (1, 4, '2023-01-01 09:10:00', 3000),
-                                                           (2, 2, '2023-01-01 09:00:00', 2000),
-                                                           (2, 3, '2023-01-01 09:05:00', 5000),
-                                                           (2, 4, '2023-01-01 09:10:00', 10000);
+                                                           (3, 2, '2023-01-20 09:00:00', 1000),
+                                                           (3, 3, '2023-01-20 09:05:00', 2000),
+                                                           (3, 4, '2023-01-20 09:10:00', 3000),
+                                                           (6, 2, '2023-01-20 09:00:00', 1000),
+                                                           (6, 3, '2023-01-20 09:05:00', 2000),
+                                                           (6, 4, '2023-01-20 09:10:00', 3000),
+                                                           (5, 2, '2023-01-22 09:00:00', 1000),
+                                                           (5, 3, '2023-01-22 09:05:00', 2000),
+                                                           (5, 4, '2023-01-22 09:10:00', 3000),
+                                                           (4, 2, '2023-01-21 09:00:00', 2000),
+                                                           (4, 3, '2023-01-21 09:05:00', 5000),
+                                                           (4, 4, '2023-01-21 09:10:00', 10000);
 
 create table vendu (
     idOffre int not null
 );
 alter table vendu add foreign key (idOffre) references offre(id);
 insert into vendu values
-                      (3),
-                      (6);
+                      (7),
+                      (14);
 
 
 
