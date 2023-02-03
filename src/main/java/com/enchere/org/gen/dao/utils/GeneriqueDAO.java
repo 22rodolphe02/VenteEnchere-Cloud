@@ -83,6 +83,42 @@ public abstract class GeneriqueDAO {
         }
     }
 
+    public Object findOne(Connection connection, String... request) throws Exception {
+        Object result = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            String sql = request.length>0 ? request[0] : generateSql();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            if (resultSet.next()){
+                result = initInstance(resultSet);
+            }
+        } catch (Exception e) {
+            connection.close();
+            throw e;
+        }finally {
+            if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+        }
+
+
+        return result;
+    }
+
+    private Object initInstance(ResultSet resultSet) throws Exception {
+        Object instance = this.getClass().getConstructor().newInstance();
+        List<Method> setters = getMethodsSetOrGet("set");
+        List<Method> getters = getMethodsSetOrGet("get");
+
+        for (int i = 0; i < getters.size(); i++) {
+            String column = getters.get(i).getName().substring(3);
+            String retType = getters.get(i).getReturnType().getSimpleName().substring(0, 1).toUpperCase() + getters.get(i).getReturnType().getSimpleName().substring(1);
+            setters.get(i).invoke(instance, ResultSet.class.getDeclaredMethod("getObject", String.class).invoke(resultSet, column));
+        }
+        return instance;
+    }
+
     public static void executeUpdate(Connection con,String sql) throws SQLException {
         Statement statement = null;
         try {

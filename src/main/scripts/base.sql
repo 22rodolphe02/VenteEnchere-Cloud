@@ -97,7 +97,7 @@ create table offre (
                        idEnchere int not null ,
                        idClient int not null ,
                        date timestamp default now() ,
-                       montant double precision
+                       montant double precision not null
 );
 alter table offre add foreign key (idClient) references client(id);
 alter table offre add foreign key (idEnchere) references enchere(id);

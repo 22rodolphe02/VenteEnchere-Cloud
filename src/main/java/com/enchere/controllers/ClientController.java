@@ -18,12 +18,13 @@ import java.sql.Timestamp;
 @RequestMapping("api/projetEnchere/client")
 public class ClientController {
     @PostMapping("/login")
-    public String login(@RequestBody ClientDao client) throws Exception {
+    public LoginResponse login(@RequestBody ClientDao client) throws Exception {
         try {
             Connection con = Database.getConnection();
             Integer iduser = client.getIdClient();
+            String token = "";
             if (iduser != null){
-                String token = Utils.creationToken(client.getEmail(), client.getMdp());
+                token = Utils.creationToken(client.getEmail(), client.getMdp());
                 System.out.println("Le token = "+token);
                 boolean exist = Token.verifierExistanceTokenAndValidation(client.getEmail(), client.getMdp());
                 if (exist == false){
@@ -44,9 +45,9 @@ public class ClientController {
                 else {
                     System.out.println("Token existant ! Oueh !");
                 }
-                return token;
             }
-            else return "";
+
+            return new LoginResponse(client.login() != null, client.login(), token);
 
         }
         catch (Exception e) {
@@ -74,5 +75,48 @@ public class ClientController {
             e.printStackTrace();
             throw e;
         }
+    }
+}
+
+
+
+class LoginResponse{
+    private boolean isSuccess;
+    private ClientDao client;
+    private String message;
+
+    public LoginResponse(boolean isSuccess, ClientDao client, String message) {
+        this.isSuccess = isSuccess;
+        this.client = client;
+        this.message = message;
+    }
+
+    public LoginResponse(boolean isSuccess, ClientDao client){
+        this.isSuccess = isSuccess;
+        this.client = client;
+    }
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public void setSuccess(boolean success) {
+        isSuccess = success;
+    }
+
+    public ClientDao getClient() {
+        return client;
+    }
+
+    public void setClient(ClientDao client) {
+        this.client = client;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

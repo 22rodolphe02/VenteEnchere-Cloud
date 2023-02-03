@@ -73,4 +73,10 @@ public class ClientDao extends GeneriqueDAO {
         else id = null;
         return id;
     }
+
+
+    public ClientDao login() throws Exception {
+        return (ClientDao) this.findOne(Database.getConnection());
+    }
+
 }

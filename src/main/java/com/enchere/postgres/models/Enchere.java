@@ -314,6 +314,21 @@ public class Enchere extends GeneriqueDAO {
         }
     }
 
+    public static Offre getDerniereOffre(int idEnchere) throws Exception {
+        try {
+            Offre offre = new Offre();
+            offre.setId(getIdDerniereOffre(idEnchere));
+            List<Offre> offres = (List<Offre>) offre.list(Database.getConnection());
+            if (offres.size() != 0) {
+                return offres.get(0);
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
     public static Integer getIdDerniereOffre(int idEnchere) throws Exception {
         try {
             String[][] tab = GeneriqueDAO.execute(Database.getConnection(), "select * from offre where idenchere=" + idEnchere + " order by date desc limit 1");
@@ -486,5 +501,20 @@ public class Enchere extends GeneriqueDAO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+
+    public static Enchere getEnchereById(int idEnchere) throws Exception {
+        try {
+            List<Enchere> encheres = null;
+            encheres = (List<Enchere>) new Enchere(idEnchere).list(Database.getConnection());
+            if (encheres.size()>0) {
+                return encheres.get(0);
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }
