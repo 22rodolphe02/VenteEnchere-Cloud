@@ -6,6 +6,15 @@ create database enchere;
 
 \c enchere;
 
+drop table admin cascade ;
+drop table client cascade ;
+drop table mouvementSolde cascade ;
+drop table solde cascade ;
+drop table categorie cascade ;
+drop table enchere cascade ;
+drop table offre cascade ;
+drop table vendu cascade ;
+
 create table admin (
                        id serial primary key ,
                        email varchar(50) not null unique ,
@@ -60,8 +69,8 @@ insert into categorie (categorie) values
                                       ('art'),
                                       ('moto'),
                                       ('voiture'),
-                                      ('football');
-
+                                      ('football'),
+                                      ('jeux');
 
 create table enchere (
                          id serial primary key ,
@@ -78,19 +87,43 @@ alter table enchere add foreign key (idCategorie) references categorie(id);
 alter table enchere add foreign key (idClient) references client(id);
 
 
-/*delete from vendu;
-delete from offre;
-delete from enchere;
-delete from categorie;*/
 insert into enchere (produit, description, prixMin, dateDebut, duree, idCategorie, idClient) values
                                                                                                  ('Maillot', 'lionnel messi', 2000, '2023-01-24 06:00:00', '10:00:00', 5, 1),
                                                                                                  ('Ballon football', 'Coupe du monde 2014', 1000, '2023-01-24 10:00:00', '08:00:00', 5, 2),
                                                                                                  ('Guitare', 'guitare base', 500, '2023-01-23 14:00:00', '05:00:00', 1, 1),
                                                                                                  ('Peinture', 'Couleur varie', 1500, '2023-01-25 07:00:00', '06:00:00', 2, 3);
-
+insert into enchere (produit, description, prixMin,dateDebut, duree, idCategorie, idClient) values
+                                                                                                ('Jocande',          'Un tableau de Leonard de Vinci',                      10000,      '2023-02-03 11:15:00',  '06:15:00', 2, 2),
+                                                                                                ('Album PLATINE',    'Les chansons de Rihana',                              75,         '2023-02-03 12:31:00',  '05:30:00', 1, 2),
+                                                                                                ('Album OR',         'Les chansons de Rihana',                              80,         '2023-02-03 09:42:00',  '06:10:00', 1, 1),
+                                                                                                ('Maillot de messi',          'Coupe du monde 2014',                        100,        '2023-02-03 10:23:00',  '05:30:00', 5, 3),
+                                                                                                ('Maillot de CR7',          'Coupe du monde 2014',                          112,        '2023-02-03 18:10:00',  '05:30:00', 5, 3),
+                                                                                                ('Ferrari 960',          'Champion du grand 8',                             120000,     '2023-02-03 20:52:00',  '04:15:00', 4, 1),
+                                                                                                ('Maillot de Zidane',          'Coupe du monde 1995',                       2000,       '2023-02-04 07:04:00',  '07:45:00', 5, 2),
+                                                                                                ('Royals midigthon', 'Moto pour le Roading',                                5000,       '2023-02-04 21:16:00',  '07:00:00', 3, 3),
+                                                                                                ('Porsche 4001',          'Le porsche de Grantorino',                       132000,     '2023-02-04 19:15:00',  '04:00:00', 4, 1),
+                                                                                                ('Statue de bronze', 'Statue de Zeus en bronze',                            30000,      '2023-02-04 11:38:00',  '06:30:00', 2, 3),
+                                                                                                ('Harlinton 1998',   'Moto de Elvis Presley',                               15000,      '2023-02-04 08:24:00',  '09:15:00', 3, 1),
+                                                                                                ('Nitendo switch serie 3',   'Console de jeu portable 2015',                220,        '2023-02-04 06:22:00',  '10:20:00', 6, 3),
+                                                                                                ('Lamborghini seie X',      'Voiture de sport',                             100000,     '2023-02-04 12:39:00',  '08:15:00', 4, 2),
+                                                                                                ('Xbox series X',    'Console de jeu puissant par Microsoft',               500,        '2023-02-05 13:46:00',  '11:10:00', 6, 1),
+                                                                                                ('Le jardin perdu',          'Un tableau de Picasso',                       32000,      '2023-02-05 11:15:00',  '06:15:00', 2, 2),
+                                                                                                ('Album redemption',    'Les chansons de Maitre Gims',                      120,        '2023-02-05 12:31:00',  '05:30:00', 1, 2),
+                                                                                                ('Album XOX',         'Les chansons de Ed Sheeran',                         65,         '2023-02-06 09:42:00',  '06:10:00', 1, 1),
+                                                                                                ('Maillot de Jordan',          'NBA 2010',                                  300,        '2023-02-06 10:23:00',  '05:30:00', 5, 3),
+                                                                                                ('Maillot de Curry',          'NBA 2019',                                   112,        '2023-02-06 18:10:00',  '05:30:00', 5, 3),
+                                                                                                ('Ferrari Jaguar',          'Champion du grand 8 2020',                     120000,     '2023-02-06 20:52:00',  '04:15:00', 4, 1),
+                                                                                                ('Maillot de Federer',          'Championnat golf 2018',                    96,         '2023-02-06 07:04:00',  '07:45:00', 5, 2),
+                                                                                                ('Royals Alsy ', 'Moto pour le Roading X',                                  5000,       '2023-02-07 21:16:00',  '07:00:00', 3, 3),
+                                                                                                ('Porsche serie Alpha',          'Le porsche de Grantorino',                132000,     '2023-02-07 19:15:00',  '04:00:00', 4, 1),
+                                                                                                ('Ile rouge', 'Illustration de Bentolini',                                  30000,      '2023-02-07 11:38:00',  '06:30:00', 2, 3),
+                                                                                                ('Neg14 20',   'Moto de Chuck Norris',                                      15000,      '2023-02-07 08:24:00',  '09:15:00', 3, 1),
+                                                                                                ('Nitendo switch serie Zelda',   'Console de jeu portable',                 220,        '2023-02-07 06:22:00',  '10:20:00', 6, 3),
+                                                                                                ('Lamborghini noir matte',      'Voiture de sport',                         100000,     '2023-02-08 12:39:00',  '08:15:00', 4, 2),
+                                                                                                ('Xbox series X 360 turbo',    'Console de jeu puissant par Microsoft',     500,        '2023-02-09 13:46:00',  '11:10:00', 6, 1)
+;
 
 -- select ((dateDebut+duree) - now()) as dureeRestant from enchere;
-
 
 create table offre (
                        id serial primary key ,
@@ -111,6 +144,7 @@ insert into offre (idEnchere, idClient, date, montant) values
                                                            (2, 2, '2023-01-24 09:00:00', 1000),
                                                            (2, 3, '2023-01-24 09:05:00', 2000),
                                                            (2, 4, '2023-01-24 09:10:00', 3000);
+
 
 create table vendu (
     idOffre int not null unique

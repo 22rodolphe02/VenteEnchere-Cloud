@@ -335,7 +335,14 @@ class OffreResponse {
             if (enchere != null) {
                 if (!enchere.getFini()) {
                     if (!Objects.equals(enchere.getIdClient(), this.offre.getIdClient())) {
-                        Offre derniereOffre = Enchere.getDerniereOffre(idEnchere);
+                        Offre derniereOffre = null;
+                        if (Enchere.getDerniereOffre(idEnchere) != null) {
+                            derniereOffre = Enchere.getDerniereOffre(idEnchere);
+                        }
+                        else {
+                            derniereOffre = new Offre();
+                            derniereOffre.setMontant(enchere.getPrixMin());
+                        }
                         if (this.offre.getMontant() > derniereOffre.getMontant()) {
                             this.offre.save(Database.getConnection());
                             this.message = "Votre mise de " + this.offre.getMontant() + "Ar a ete bien enregistre!";
@@ -343,6 +350,9 @@ class OffreResponse {
                         }
                         else {
                             this.message = "La derniere mise est " + derniereOffre.getMontant() + " Ar, veuillez la depasser pour miser!";
+                        }
+                        if (Enchere.getDerniereOffre(idEnchere) == null) {
+                            this.message = "Veuillez depassez le prix " + enchere.getPrixMin() + " minimum pour miser!";
                         }
                     }
                     else {
