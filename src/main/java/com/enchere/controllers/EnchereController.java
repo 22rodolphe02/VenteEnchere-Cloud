@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 @CrossOrigin("*")
 @RestController
@@ -224,10 +225,9 @@ public class EnchereController {
 
     //     build update offre REST API
     @PostMapping("/encherir")
-    public ResponseEntity<Offre> encherir(@RequestBody Offre offreSave) throws Exception {
+    public OffreResponse encherir(@RequestBody Offre offreSave) throws Exception {
         try {
-            offreSave.save(Database.getConnection());
-            return ResponseEntity.ok(offreSave);
+            return new OffreResponse(offreSave).verifierOffre();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -271,4 +271,125 @@ public class EnchereController {
     }
 
 
+}
+
+
+class EnchereSaveResponse {
+    private boolean isSuccess;
+    private Enchere enchere;
+    private String message;
+
+    public EnchereSaveResponse(Enchere enchere) {
+        this.enchere = enchere;
+    }
+
+    public EnchereSaveResponse save() {
+        try {
+            this.enchere.save(Database.getConnection());
+            this.isSuccess = true;
+            this.message = "Insertion enchere reussi!";
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.isSuccess = false;
+            this.message = "Insertion echoue!";
+        }
+        return this;
+    }
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public void setSuccess(boolean success) {
+        isSuccess = success;
+    }
+
+    public Enchere getEnchere() {
+        return enchere;
+    }
+
+    public void setEnchere(Enchere enchere) {
+        this.enchere = enchere;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}
+
+
+class OffreResponse {
+    private boolean isSuccess;
+    private Offre offre;
+    private String message;
+
+
+    public OffreResponse verifierOffre() throws Exception {
+        try {
+            int idEnchere = this.offre.getIdEnchere();
+            Enchere enchere = Enchere.getEnchereById(idEnchere);
+            this.isSuccess = false;
+            if (enchere != null) {
+                if (!enchere.getFini()) {
+                    if (!Objects.equals(enchere.getIdClient(), this.offre.getIdClient())) {
+                        Offre derniereOffre = Enchere.getDerniereOffre(idEnchere);
+                        if (this.offre.getMontant() > derniereOffre.getMontant()) {
+                            this.offre.save(Database.getConnection());
+                            this.message = "Votre mise de " + this.offre.getMontant() + "Ar a ete bien enregistre!";
+                            this.isSuccess = true;
+                        }
+                        else {
+                            this.message = "La derniere mise est " + derniereOffre.getMontant() + " Ar, veuillez la depasser pour miser!";
+                        }
+                    }
+                    else {
+                        this.message = "Vous ne pouvez pas encherir avec votre propre enchere!";
+                    }
+                }
+                else {
+                    this.message = "L'enchere avec l'id " + this.offre.getIdEnchere() + " n'est plus disponible!";
+                }
+            }
+            else {
+                this.message = "Il n'y a pas d'enchere avec l'id " + this.offre.getIdEnchere();
+            }
+            return this;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+
+    public OffreResponse(Offre offre) {
+        this.offre = offre;
+    }
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public void setSuccess(boolean success) {
+        isSuccess = success;
+    }
+
+    public Offre getOffre() {
+        return offre;
+    }
+
+    public void setOffre(Offre offre) {
+        this.offre = offre;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
