@@ -32,7 +32,7 @@ public class EnchereController {
     }*/
 
     //    build create enchere REST API
-    @GetMapping("/recordEnchere")
+    @GetMapping("/record")
     public Enchere recordEnchere() throws Exception {
         try {
             return Enchere.recordEnchere();
