@@ -4,6 +4,8 @@ import com.enchere.org.gen.dao.annotations.Colonne;
 import com.enchere.org.gen.dao.annotations.Table;
 import com.enchere.org.gen.dao.utils.GeneriqueDAO;
 import com.enchere.utils.Database;
+
+import java.sql.Timestamp;
 import java.util.List;
 
 @Table
@@ -74,5 +76,10 @@ public class Admin extends GeneriqueDAO {
         if (admins.size()!=0) id = admins.get(0).getId();
         else id = null;
         return id;
+    }
+
+    public static void main(String[] args) {
+        Timestamp timestamp = Timestamp.valueOf("2023-02-08 20:00:00");
+        System.out.println(timestamp);
     }
 }

@@ -237,6 +237,7 @@ public class EnchereController {
     //     build update enchere REST API
     @PostMapping("/save")
     public EnchereSaveResponse insertEnchere(@RequestBody Enchere enchereSave) throws Exception {
+        System.out.println("ato");
         try {
             return new EnchereSaveResponse(enchereSave).save();
         } catch (Exception e) {

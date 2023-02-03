@@ -443,7 +443,7 @@ public class Enchere extends GeneriqueDAO {
     }
 
     public void setDateDebut(Timestamp dateDebut) {
-        this.dateDebut = dateDebut;
+        this.dateDebut = Utils.toTimestamp(dateDebut.toString());
     }
 
     public Time getDuree() {
