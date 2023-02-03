@@ -2,6 +2,7 @@ package com.enchere.postgres.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -27,7 +28,7 @@ public class Solde {
     private Double montant;
 
     @Column(name = "valider")
-    private Boolean valider;
+    private Boolean valider = false;
 
     public Integer getId() {
         return id;

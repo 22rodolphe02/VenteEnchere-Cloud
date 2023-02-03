@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/soldes")
+@RequestMapping("api/projetEnchere/soldes")
 @CrossOrigin("*")
 public class SoldeController {
     private final SoldeRepository soldeRepos;
@@ -33,7 +33,7 @@ public class SoldeController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Integer> save(Solde solde){
+    public ResponseEntity<Integer> save(@RequestBody Solde solde){
         soldeRepos.save(solde);
         return new ResponseEntity<>(1, HttpStatus.ACCEPTED);
     }

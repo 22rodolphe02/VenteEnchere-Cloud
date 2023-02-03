@@ -17,6 +17,7 @@ public class RechercheAvance {
     private String dureeMin;
     private String dureeMax;
     private String idCategorie;
+    private String status;
 
     public List<Enchere> rechercheAvancer() throws Exception {
         try {
@@ -24,14 +25,20 @@ public class RechercheAvance {
             if (produit != null) {
                 enchere.setProduit(produit);
                 System.out.println("produit = " + produit);
-            }
+            }/*
             if (description != null) {
                 enchere.setDescription(description);
                 System.out.println("description = " + description);
-            }
+            }*/
             if (idCategorie != null) {
                 enchere.setIdCategorie(Integer.parseInt(idCategorie));
                 System.out.println("idCategorie = " + idCategorie);
+            }
+            System.out.println("Ok");
+            System.out.println("status = " + status);
+            if (status != null) {
+                enchere.setFini(Boolean.valueOf(status));
+                System.out.println("status = " + status);
             }
 
             List<Enchere> encheres = (List<Enchere>) enchere.list(Database.getConnection());
@@ -42,8 +49,10 @@ public class RechercheAvance {
                 Double prixMinMinD = Double.valueOf(prixMinMin);
                 for (int i = 0; i < nbEnchere; i++) {
                     if (encheres.get(i).getPrixMin() < prixMinMinD) {
-                        encheres.remove(i);
                         System.out.println("prixMinMinD");
+                        encheres.remove(i);
+                        i--;
+                        nbEnchere--;
                     }
                 }
                 nbEnchere = encheres.size();
@@ -53,8 +62,10 @@ public class RechercheAvance {
                 Double prixMinMaxD = Double.valueOf(prixMinMax);
                 for (int i = 0; i < nbEnchere; i++) {
                     if (encheres.get(i).getPrixMin() > prixMinMaxD) {
-                        encheres.remove(i);
                         System.out.println("prixMinMaxD");
+                        encheres.remove(i);
+                        i--;
+                        nbEnchere--;
                     }
                 }
                 nbEnchere = encheres.size();
@@ -66,6 +77,8 @@ public class RechercheAvance {
                     if (encheres.get(i).getDateDebut().before(dateDebutMinD)) {
                         System.out.println("dateDebutMinD");
                         encheres.remove(i);
+                        i--;
+                        nbEnchere--;
                     }
                 }
                 nbEnchere = encheres.size();
@@ -78,6 +91,8 @@ public class RechercheAvance {
                         System.out.println("dateDebut = " + encheres.get(i).getDateDebut());
                         System.out.println("dateDebutMaxD = " + dateDebutMaxD);
                         encheres.remove(i);
+                        i--;
+                        nbEnchere--;
                     }
                 }
                 nbEnchere = encheres.size();
@@ -87,8 +102,10 @@ public class RechercheAvance {
                 Time dureeMinD = Utils.toTime(dureeMin);
                 for (int i = 0; i < nbEnchere; i++) {
                     if (encheres.get(i).getDuree().before(dureeMinD)) {
-                        encheres.remove(i);
                         System.out.println("dureeMinD");
+                        encheres.remove(i);
+                        i--;
+                        nbEnchere--;
                     }
                 }
                 nbEnchere = encheres.size();
@@ -98,8 +115,22 @@ public class RechercheAvance {
                 Time dureeMaxD = Utils.toTime(dureeMax);
                 for (int i = 0; i < nbEnchere; i++) {
                     if (encheres.get(i).getDuree().after(dureeMaxD)) {
-                        encheres.remove(i);
                         System.out.println("dureeMaxD");
+                        encheres.remove(i);
+                        i--;
+                        nbEnchere--;
+                    }
+                }
+                nbEnchere = encheres.size();
+            }
+
+            if (nbEnchere!=0 && description != null) {
+                for (int i = 0; i < nbEnchere; i++) {
+                    if (!encheres.get(i).getDescription().contains(description)) {
+                        System.out.println("Description = " + description);
+                        encheres.remove(i);
+                        i--;
+                        nbEnchere--;
                     }
                 }
                 nbEnchere = encheres.size();
@@ -198,5 +229,13 @@ public class RechercheAvance {
 
     public void setIdCategorie(String idCategorie) {
         this.idCategorie = idCategorie;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
