@@ -236,10 +236,9 @@ public class EnchereController {
 
     //     build update enchere REST API
     @PostMapping("/save")
-    public ResponseEntity<Enchere> insertEnchere(@RequestBody Enchere enchereSave) throws Exception {
+    public EnchereSaveResponse insertEnchere(@RequestBody Enchere enchereSave) throws Exception {
         try {
-            enchereSave.save(Database.getConnection());
-            return ResponseEntity.ok(enchereSave);
+            return new EnchereSaveResponse(enchereSave).save();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
