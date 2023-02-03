@@ -47,7 +47,7 @@ public class ClientController {
                 return new LoginResponse(false, null, "email ou mot de passe incorrect");
             }
 
-            return new LoginResponse(true, client, token);
+            return new LoginResponse(true, clientDao, token);
 
         }
         catch (Exception e) {
