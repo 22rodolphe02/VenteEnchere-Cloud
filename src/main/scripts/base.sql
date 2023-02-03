@@ -144,7 +144,7 @@ insert into offre (idEnchere, idClient, date, montant) values
                                                            (2, 2, '2023-01-24 09:00:00', 1000),
                                                            (2, 3, '2023-01-24 09:05:00', 2000),
                                                            (2, 4, '2023-01-24 09:10:00', 3000);
-
+-- aaa
 
 create table vendu (
     idOffre int not null unique
