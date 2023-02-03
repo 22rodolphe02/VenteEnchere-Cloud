@@ -25,7 +25,6 @@ public class ClientController {
             String token = "";
             if (iduser != null){
                 token = Utils.creationToken(client.getEmail(), client.getMdp());
-                System.out.println("Le token = "+token);
                 boolean exist = Token.verifierExistanceTokenAndValidation(client.getEmail(), client.getMdp());
                 if (!exist){
                     Timestamp dateexp = Utils.getDateExpiration(30);
