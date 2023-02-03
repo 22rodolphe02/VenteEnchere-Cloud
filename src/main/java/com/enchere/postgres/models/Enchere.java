@@ -6,6 +6,7 @@ import com.enchere.org.gen.dao.annotations.Table;
 import com.enchere.org.gen.dao.utils.GeneriqueDAO;
 import com.enchere.utils.Database;
 import com.enchere.utils.Utils;
+import org.springframework.data.relational.core.sql.In;
 
 import java.sql.SQLException;
 import java.sql.Time;
@@ -36,6 +37,7 @@ public class Enchere extends GeneriqueDAO {
     @Colonne
     private Boolean fini;
     private Boolean dejaMiser;
+    private String status;
 
 
     public static ClientDao recordAcheteur() throws Exception {
@@ -104,19 +106,58 @@ public class Enchere extends GeneriqueDAO {
         }
     }
 
+    public static List<Enchere> leursEnchereEnAttente(int monIdClient) throws Exception {
+        try {
+            List<Enchere> enchereEnAttente = enchereEnAttente();
+            int nbEnchereEnAttente = enchereEnAttente.size();
+            for (int i = 0; i < nbEnchereEnAttente; i++) {
+                if (enchereEnAttente.get(i).getIdClient() == monIdClient) {
+                    enchereEnAttente.remove(i);
+                    i--;
+                    nbEnchereEnAttente--;
+                }
+            }
+            return enchereEnAttente;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public static List<Enchere> mesEnchereEnAttente(int monIdClient) throws Exception {
+        try {
+            List<Enchere> enchereEnAttente = enchereEnAttente();
+            int nbEnchereEnAttente = enchereEnAttente.size();
+            for (int i = 0; i < nbEnchereEnAttente; i++) {
+                if (enchereEnAttente.get(i).getIdClient() != monIdClient) {
+                    enchereEnAttente.remove(i);
+                    i--;
+                    nbEnchereEnAttente--;
+                }
+            }
+            return enchereEnAttente;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
 
     public static List<Enchere> enchereEnAttente() throws Exception {
         try {
-            List<Enchere> enchereEnCours = enchereEnCours();
+            List<Enchere> enchereEnCours = toutesLesEnchereEnCours();
             List<Enchere> encherePasFini = encherePasFini();
             int nbEncherePasFini = encherePasFini.size();
-            int nbEnchereEnCours = enchereEnCours.size();
             for (int i = 0; i < nbEncherePasFini; i++) {
                 for (Enchere enchereEnCour : enchereEnCours) {
                     if (Objects.equals(enchereEnCour.getId(), encherePasFini.get(i).getId())) {
                         encherePasFini.remove(i);
+                        i--;
+                        nbEncherePasFini--;
+                        break;
                     }
                 }
+                encherePasFini.get(i).setStatus("En attente");
             }
             return encherePasFini;
         } catch (Exception e) {
@@ -125,16 +166,94 @@ public class Enchere extends GeneriqueDAO {
         }
     }
 
-    public static List<Enchere> enchereEnCours() throws Exception {
+    public static List<Enchere> leursEnchereTermine(int monIdClient) throws Exception {
+        try {
+            List<Enchere> enchereTermine = enchereFini();
+            int nbEnchereTermine = enchereTermine.size();
+            for (int i = 0; i < nbEnchereTermine; i++) {
+                if (enchereTermine.get(i).getIdClient() == monIdClient) {
+                    enchereTermine.remove(i);
+                    i--;
+                    nbEnchereTermine--;
+                }
+            }
+            return enchereTermine;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public static List<Enchere> mesEnchereTermine(int monIdClient) throws Exception {
+        try {
+            List<Enchere> enchereTermine = enchereFini();
+            int nbEnchereTermine = enchereTermine.size();
+            for (int i = 0; i < nbEnchereTermine; i++) {
+                if (enchereTermine.get(i).getIdClient() != monIdClient) {
+                    enchereTermine.remove(i);
+                    i--;
+                    nbEnchereTermine--;
+                }
+            }
+            return enchereTermine;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public static List<Enchere> leursEnchereEnCours(int idClient) throws Exception {
+        try {
+            List<Enchere> enchereEnCours = toutesLesEnchereEnCours();
+            int nbEnchereEnCours = enchereEnCours.size();
+            for (int i = 0; i < nbEnchereEnCours; i++) {
+                if (enchereEnCours.get(i).getIdClient() == idClient) {
+                    enchereEnCours.remove(i);
+                    i--;
+                    nbEnchereEnCours--;
+                }
+            }
+            return enchereEnCours;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public static List<Enchere> mesEnchereEnCours(int idClient) throws Exception {
+        try {
+            List<Enchere> enchereEnCours = toutesLesEnchereEnCours();
+            int nbEnchereEnCours = enchereEnCours.size();
+            for (int i = 0; i < nbEnchereEnCours; i++) {
+                if (enchereEnCours.get(i).getIdClient() != idClient) {
+                    enchereEnCours.remove(i);
+                    i--;
+                    nbEnchereEnCours--;
+                }
+            }
+            return enchereEnCours;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public static List<Enchere> toutesLesEnchereEnCours() throws Exception {
         try {
             List<Enchere> encheres = encherePasFini();
             int nbEnchere = encheres.size();
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaa = " + nbEnchere);
             for (int i = 0; i < nbEnchere; i++) {
                 if (encheres.get(i).getDateDebut().after(new Timestamp(new Date().getTime()))) {
+                    System.out.println("AAAA = " + encheres.get(i).getDateDebut());
+                    System.out.println("BBBB = " + new Timestamp(new Date().getTime()));
                     encheres.remove(i);
+                    i--;
+                    nbEnchere--;
                 }
                 else {
                     encheres.get(i).setDejaMiser();
+                    encheres.get(i).setStatus("En cours");
                 }
             }
             return encheres;
@@ -157,7 +276,21 @@ public class Enchere extends GeneriqueDAO {
     public static List<Enchere> enchereFini() throws Exception {
         try {
             terminerEnchere();
-            return (List<Enchere>) new Enchere(true).list(Database.getConnection());
+            List<Enchere> encheres = (List<Enchere>) new Enchere(true).list(Database.getConnection());
+            for (Enchere enchere: encheres) {
+                enchere.setStatus("Termine");
+            }
+            return encheres;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public static List<Enchere> toutesLesEnchere() throws Exception {
+        try {
+            terminerEnchere();
+            return (List<Enchere>) new Enchere().list(Database.getConnection());
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -170,7 +303,24 @@ public class Enchere extends GeneriqueDAO {
             if (dureeRestant.toCharArray()[0] == '-') {
                 System.out.println("Update fini enchere");
                 new Enchere(true).update(Database.getConnection(), String.valueOf(idEnchere));
+                Integer idDerniereOffre = getIdDerniereOffre(idEnchere);
+                if (idDerniereOffre!=null) {
+                    GeneriqueDAO.executeUpdate(Database.getConnection(), "insert into vendu values (" + idDerniereOffre + ")");
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public static Integer getIdDerniereOffre(int idEnchere) throws Exception {
+        try {
+            String[][] tab = GeneriqueDAO.execute(Database.getConnection(), "select * from offre where idenchere=" + idEnchere + " order by date desc limit 1");
+            if (tab.length!=0) {
+                return Integer.parseInt(tab[0][0]);
+            }
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -181,7 +331,6 @@ public class Enchere extends GeneriqueDAO {
         try {
             List<Enchere> encheres = (List<Enchere>) new Enchere(false).list(Database.getConnection());
             for (Enchere enchere: encheres) {
-
                 terminerEnchereById(enchere.getId());
             }
         } catch (Exception e) {
@@ -329,5 +478,13 @@ public class Enchere extends GeneriqueDAO {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

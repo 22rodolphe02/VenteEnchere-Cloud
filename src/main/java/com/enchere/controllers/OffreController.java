@@ -38,11 +38,13 @@ public class OffreController {
         }
     }
 
+
+
     //    build get offre by id REST API
-    @GetMapping("/getOffreParClient/{id}")
-    public List<Offre> getOffreParClient(@PathVariable int id) throws Exception {
+    @GetMapping("/getOffreParEnchere/{idEnchere}")
+    public List<Offre> getOffreParEnchere(@PathVariable int idEnchere) throws Exception {
         try {
-            return (List<Offre>) Offre.getOffreParEnchere(id);
+            return (List<Offre>) Offre.getOffreParEnchere(idEnchere);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

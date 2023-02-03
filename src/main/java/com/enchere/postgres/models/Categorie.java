@@ -29,6 +29,9 @@ public class Categorie extends GeneriqueDAO {
                     }
                 }
             }
+            categories.sort((o1, o2) -> {
+                return o1.getNbEnchere() > o2.getNbEnchere() ? -1 : 0;
+            });
             return categories;
         }
         catch (Exception e) {

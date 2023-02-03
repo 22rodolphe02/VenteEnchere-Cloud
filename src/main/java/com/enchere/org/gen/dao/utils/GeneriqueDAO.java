@@ -83,6 +83,23 @@ public abstract class GeneriqueDAO {
         }
     }
 
+    public static void executeUpdate(Connection con,String sql) throws SQLException {
+        Statement statement = null;
+        try {
+            statement = con.createStatement();
+            statement.executeUpdate(sql);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        finally {
+            assert statement != null;
+            statement.close();
+
+        }
+    }
+
     public void update(Connection con,String id) throws Exception {
         try {
             StringBuilder sql = new StringBuilder("UPDATE " + getTableName() + " set ");
