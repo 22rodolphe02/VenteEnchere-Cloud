@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/projetEnchere/soldes")
+@RequestMapping("api/soldes")
 @CrossOrigin("*")
 public class SoldeController {
     private final SoldeRepository soldeRepos;
@@ -33,9 +33,14 @@ public class SoldeController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Integer> save(@RequestBody Solde solde){
-        soldeRepos.save(solde);
-        return new ResponseEntity<>(1, HttpStatus.ACCEPTED);
+    public SoldeResponse save(@RequestBody Solde solde){
+        try {
+            soldeRepos.save(solde);
+            return new SoldeResponse("enregistrement réussi!");
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return new SoldeResponse("erreur d'enregistrement");
+        }
     }
 
     @PostMapping("/update")
@@ -43,4 +48,20 @@ public class SoldeController {
         return soldeRepos.updateValiderById(solde.getValider(), solde.getId());
     }
 
+}
+
+class SoldeResponse{
+    private String message;
+
+    public SoldeResponse(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
