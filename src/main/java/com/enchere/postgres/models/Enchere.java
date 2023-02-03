@@ -316,11 +316,13 @@ public class Enchere extends GeneriqueDAO {
 
     public static Offre getDerniereOffre(int idEnchere) throws Exception {
         try {
-            Offre offre = new Offre();
-            offre.setId(getIdDerniereOffre(idEnchere));
-            List<Offre> offres = (List<Offre>) offre.list(Database.getConnection());
-            if (offres.size() != 0) {
-                return offres.get(0);
+            if (getIdDerniereOffre(idEnchere) != null) {
+                Offre offre = new Offre();
+                offre.setId(getIdDerniereOffre(idEnchere));
+                List<Offre> offres = (List<Offre>) offre.list(Database.getConnection());
+                if (offres.size() != 0) {
+                    return offres.get(0);
+                }
             }
             return null;
         } catch (Exception e) {
@@ -333,6 +335,8 @@ public class Enchere extends GeneriqueDAO {
         try {
             String[][] tab = GeneriqueDAO.execute(Database.getConnection(), "select * from offre where idenchere=" + idEnchere + " order by date desc limit 1");
             if (tab.length!=0) {
+                System.out.println("ato");
+                System.out.println(Integer.parseInt(tab[0][0]));
                 return Integer.parseInt(tab[0][0]);
             }
             return null;
