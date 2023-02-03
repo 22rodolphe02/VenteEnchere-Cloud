@@ -27,27 +27,27 @@ public class ClientController {
                 token = Utils.creationToken(client.getEmail(), client.getMdp());
                 System.out.println("Le token = "+token);
                 boolean exist = Token.verifierExistanceTokenAndValidation(client.getEmail(), client.getMdp());
-                if (exist == false){
-                    System.out.println("Token non existant ou non valide !");
+                if (!exist){
                     Timestamp dateexp = Utils.getDateExpiration(30);
                     Token tok = new Token();
                     tok.setToken(token);
                     tok.setDateexpiration(dateexp);
                     tok.insererToken(con);
                     int idtoken = Integer.parseInt(SequenceHelper.last_value("token", con));
-                    System.out.println("idtoken crée ="+idtoken);
                     Token_user tu = new Token_user();
                     tu.setId_token(idtoken);
                     tu.setId_user(iduser);
                     tu.insererTokenUser(con);
                     con.close();
                 }
-                else {
-                    System.out.println("Token existant ! Oueh !");
-                }
             }
 
-            return new LoginResponse(client.login() != null, client.login(), token);
+            ClientDao clientDao = client.login();
+            if (clientDao == null){
+                return new LoginResponse(false, null, "email ou mot de passe incorrect");
+            }
+
+            return new LoginResponse(true, client, token);
 
         }
         catch (Exception e) {

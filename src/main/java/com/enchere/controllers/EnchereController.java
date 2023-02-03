@@ -85,8 +85,9 @@ public class EnchereController {
     @GetMapping("/mesEnchere/{monIdClient}")
     public List<Enchere> mesEnchere(@PathVariable int monIdClient) throws Exception {
         try {
-            List<Enchere> encheres = Enchere.mesEnchereEnAttente(monIdClient);
-            encheres.addAll(Enchere.mesEnchereEnCours(monIdClient));
+//            List<Enchere> encheres = Enchere.mesEnchereEnAttente(monIdClient);
+            List<Enchere> encheres = Enchere.mesEnchereEnCours(monIdClient);
+//            encheres.addAll(Enchere.mesEnchereEnCours(monIdClient));
             encheres.addAll(Enchere.mesEnchereTermine(monIdClient));
             encheres.sort((o1, o2) -> {
                 return (o1.getDateDebut().getTime() + o1.getDuree().getTime()) > (o2.getDateDebut().getTime() + o2.getDuree().getTime()) ? -1 : 0;
