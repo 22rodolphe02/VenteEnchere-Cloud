@@ -3,3 +3,6 @@ PGPASSWORD=jYeEtXwfTysoGJBtzHDg psql -h containers-us-west-19.railway.app -U pos
 
 Connection:
   postgresql://postgres:jYeEtXwfTysoGJBtzHDg@containers-us-west-19.railway.app:6336/railway
+  
+Connection Mongo:
+  mongodb://mongo:5PWyf3KIvy5YxVJ38Bhn@containers-us-west-50.railway.app:5932
