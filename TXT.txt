@@ -1,2 +1,5 @@
 Postgres
 PGPASSWORD=jYeEtXwfTysoGJBtzHDg psql -h containers-us-west-19.railway.app -U postgres -p 6336 -d railway
+
+Connection:
+  postgresql://postgres:jYeEtXwfTysoGJBtzHDg@containers-us-west-19.railway.app:6336/railway
